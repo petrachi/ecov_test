@@ -1,6 +1,10 @@
-h1 Trajets
+#trips
+  h1 Trajets
 
-= form_with model: Trip.new do |f|
-  = f.submit "Créer un nouveau trajet"
+  - if trips.present?
+    ul.trips = render trips
 
-= render trips
+    h3 Ou
+
+  = form_with model: Trip.new do |f|
+    = f.submit "Créez un nouveau trajet"

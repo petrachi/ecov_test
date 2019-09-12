@@ -1,0 +1,76 @@
+*,
+*::before,
+*::after
+  box-sizing: border-box
+
+html,
+body
+  height: 100%
+
+html
+  font: 1em "Helvetica Neue","Helvetica","Arial", sans-serif
+  font-weight: 200
+
+body
+  margin: 0
+  height: 100%
+
+  color: $black
+
+#content
+  padding: .5em
+  height: 100%
+  overflow: auto
+
+h1
+  font-family: 'lato', sans-serif
+  font-weight: 300
+  font-size: 3em
+  letter-spacing: .25em
+  margin-bottom: .5em
+  text-transform: uppercase
+
+h3
+  font-weight: 200
+  font-size: 1.5em
+  margin-bottom: .5em
+
+ul
+  margin: 0
+  padding: 0
+  list-style: none
+
+a
+  &,
+  &:hover,
+  &:visited,
+  &:active,
+  &:focus
+    color: inherit
+
+.btn
+  margin: .5em 0
+  padding: .75em
+  font-weight: 200
+  border: 1px solid $black
+  border-radius: 2px
+  cursor: pointer
+  display: inline-block
+  transition: all ease .4s
+  letter-spacing: .25px
+  text-decoration: inherit
+  color: $black
+  background-color: transparent
+  font-family: inherit
+  font-size: inherit
+
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+  &:hover
+    color: $white
+    background-color: $black
+
+input[type=submit]
+  @extend .btn

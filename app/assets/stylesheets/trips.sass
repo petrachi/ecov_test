@@ -1,0 +1,56 @@
+#trips
+  text-align: center
+
+  .trips
+    width: 24em
+    margin: auto
+
+    .started
+      a
+        color: $started
+        border-color: $started
+
+        &:hover
+          background-color: $started
+          color: $white
+
+    .cancelled
+      a
+        color: $cancelled
+        border-color: $cancelled
+
+        &:hover
+          background-color: $cancelled
+          color: $white
+
+    a
+      @extend .btn
+      display: block
+
+#trip
+  text-align: center
+
+  h1
+    &.started
+      color: $started
+
+    &.cancelled
+      color: $cancelled
+
+  #start-trip
+    input[type=submit]
+      color: $started
+      border-color: $started
+
+      &:hover
+        background-color: $started
+        color: $white
+
+  #cancel-trip
+    input[type=submit]
+      color: $cancelled
+      border-color: $cancelled
+
+      &:hover
+        background-color: $cancelled
+        color: $white

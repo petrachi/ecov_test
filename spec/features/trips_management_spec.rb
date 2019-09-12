@@ -7,7 +7,7 @@ RSpec.feature "Trips management", :type => :feature do
     visit "/trips"
 
     expect(Payment).to receive(:bill)
-    click_button "Créer un nouveau trajet"
+    click_button "Créez un nouveau trajet"
 
     expect(Trip.count).to equal(trip_count + 1)
     expect(Trip.last).to be_created
@@ -18,7 +18,7 @@ RSpec.feature "Trips management", :type => :feature do
 
     visit "/trips"
 
-    click_link trip.token
+    click_link "Voir le trajet #{trip.token}"
     expect(page).to have_current_path(trip_path(trip))
 
     expect(Payment).to receive(:pay)
@@ -32,7 +32,7 @@ RSpec.feature "Trips management", :type => :feature do
 
     visit "/trips"
 
-    click_link trip.token
+    click_link "Voir le trajet #{trip.token}"
     expect(page).to have_current_path(trip_path(trip))
 
     expect(Payment).to receive(:reimburse)
