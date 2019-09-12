@@ -8,9 +8,9 @@ class Trip < ApplicationRecord
   end
 
   aasm do
-    state :created, initial: true
-    state :started
-    state :cancelled
+    state :created, initial: true, after_enter: :bill
+    state :started, after_enter: :pay
+    state :cancelled, after_enter: :reimburse
 
     after_all_transitions :log_status_change
 
@@ -22,6 +22,8 @@ class Trip < ApplicationRecord
       transitions from: :created, to: :cancelled
     end
   end
+
+  delegate :bill, :reimburse, :pay, to: Payment
 
   def log_status_change
     logger.info "#{ self.class} ##{ id } changing from #{aasm.from_state} to #{aasm.to_state} (event: #{aasm.current_event})"

@@ -30,12 +30,27 @@ RSpec.describe Trip, type: :model do
     is_expected.to be_cancelled
   end
 
+  it "bills" do
+    expect(Payment).to receive(:bill)
+    subject
+  end
+
+  it "pays when started" do
+    expect(Payment).to receive(:pay)
+    subject.start
+  end
+
+  it "reimburses when cancelled" do
+    expect(Payment).to receive(:reimburse)
+    subject.cancel
+  end
+
   it "logs state change" do
     expect(Rails.logger).to receive(:info).with(/^(?=.*\b(created)\b)(?=.*?\b(started)\b).*/)
     subject.start
   end
 
-  context "subject is started" do
+  context "initialized with started state" do
     subject { Trip.create(aasm_state: "started") }
     it { is_expected.to be_started }
 
@@ -43,15 +58,25 @@ RSpec.describe Trip, type: :model do
       expect(subject.may_cancel?).to be false
       expect { subject.cancel }.to raise_error AASM::InvalidTransition
     end
+
+    it "does not pays" do
+      expect(Payment).to_not receive(:pay)
+      subject
+    end
   end
 
-  context "subject is cancelled" do
+  context "initialized with cancelled state" do
     subject { Trip.create(aasm_state: "cancelled") }
     it { is_expected.to be_cancelled }
 
     it "cannot be started" do
       expect(subject.may_start?).to be false
       expect { subject.start }.to raise_error AASM::InvalidTransition
+    end
+
+    it "does not reimburses" do
+      expect(Payment).to_not receive(:reimburse)
+      subject
     end
   end
 end
