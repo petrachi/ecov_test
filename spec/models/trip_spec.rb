@@ -30,6 +30,11 @@ RSpec.describe Trip, type: :model do
     is_expected.to be_cancelled
   end
 
+  it "logs state change" do
+    expect(Rails.logger).to receive(:info).with(/^(?=.*\b(created)\b)(?=.*?\b(started)\b).*/)
+    subject.start
+  end
+
   context "subject is started" do
     subject { Trip.create(aasm_state: "started") }
     it { is_expected.to be_started }

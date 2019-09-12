@@ -12,6 +12,8 @@ class Trip < ApplicationRecord
     state :started
     state :cancelled
 
+    after_all_transitions :log_status_change
+
     event :start do
       transitions from: :created, to: :started
     end
@@ -19,5 +21,9 @@ class Trip < ApplicationRecord
     event :cancel do
       transitions from: :created, to: :cancelled
     end
+  end
+
+  def log_status_change
+    logger.info "#{ self.class} ##{ id } changing from #{aasm.from_state} to #{aasm.to_state} (event: #{aasm.current_event})"
   end
 end
