@@ -7,6 +7,10 @@ class Trip < ApplicationRecord
     SecureRandom::base58(4)
   end
 
+  def to_param
+    token
+  end
+
   aasm do
     state :created, initial: true, after_enter: :bill
     state :started, after_enter: :pay

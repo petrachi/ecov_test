@@ -1,0 +1,17 @@
+.back = link_to 'Retour', trips_path
+
+h1 = trip.token
+
+p[class=trip.aasm_state] = trip.aasm_state.humanize
+
+- if trip.may_start?
+  = form_with url: transition_trip_path(trip) do |f|
+    = hidden_field_tag :transition, 'start'
+    = f.submit "Démarrer le trajet"
+
+- if trip.may_cancel?
+  = form_with url: transition_trip_path(trip) do |f|
+    = hidden_field_tag :transition, 'cancel'
+    = f.submit "Annuler le trajet"
+
+div = button_to "Supprimer le trajet", trip, :method => :delete, data: {confirm: "Avez-vous bien réfléchi aux conséquences de cette action ?"}
