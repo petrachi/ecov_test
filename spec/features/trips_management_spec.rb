@@ -13,13 +13,19 @@ RSpec.feature "Trips management", :type => :feature do
     expect(Trip.last).to be_created
   end
 
-  scenario "User start a trip" do
+  scenario "User goes to a trip" do
     trip = Trip.create
 
     visit "/trips"
 
     click_link "Voir le trajet #{trip.token}"
     expect(page).to have_current_path(trip_path(trip))
+  end
+
+  scenario "User start a trip" do
+    trip = Trip.create
+
+    visit "/trips/#{trip.token}"
 
     expect(Payment).to receive(:pay)
     click_button "Démarrer le trajet"
@@ -30,10 +36,21 @@ RSpec.feature "Trips management", :type => :feature do
   scenario "User cancel a trip" do
     trip = Trip.create
 
-    visit "/trips"
+    visit "/trips/#{trip.token}"
 
-    click_link "Voir le trajet #{trip.token}"
-    expect(page).to have_current_path(trip_path(trip))
+    expect(Payment).to receive(:reimburse)
+    click_button "Annuler le trajet"
+
+    expect(trip.reload).to be_cancelled
+  end
+
+  scenario "User start then cancel a trip" do
+    trip = Trip.create
+
+    visit "/trips/#{trip.token}"
+
+    expect(Payment).to receive(:pay)
+    click_button "Démarrer le trajet"
 
     expect(Payment).to receive(:reimburse)
     click_button "Annuler le trajet"

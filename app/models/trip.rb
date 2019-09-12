@@ -24,6 +24,7 @@ class Trip < ApplicationRecord
 
     event :cancel do
       transitions from: :created, to: :cancelled
+      transitions from: :started, to: :cancelled
     end
   end
 

@@ -54,9 +54,15 @@ RSpec.describe Trip, type: :model do
     subject { Trip.create(aasm_state: "started") }
     it { is_expected.to be_started }
 
-    it "cannot be canceled" do
-      expect(subject.may_cancel?).to be false
-      expect { subject.cancel }.to raise_error AASM::InvalidTransition
+    it "can be canceled" do
+      expect(subject.may_cancel?).to be true
+      subject.cancel
+      is_expected.to be_cancelled
+    end
+
+    it "reimburses when cancelled" do
+      expect(Payment).to receive(:reimburse)
+      subject.cancel
     end
 
     it "does not pays" do
