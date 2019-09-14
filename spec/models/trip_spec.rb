@@ -45,8 +45,13 @@ RSpec.describe Trip, type: :model do
     subject.cancel
   end
 
-  it "logs state change" do
+  it "logs state change to console" do
     expect(Rails.logger).to receive(:info).with(/^(?=.*\b(created)\b)(?=.*?\b(started)\b).*/)
+    subject.start
+  end
+
+  it "publishes state change to rabbitmq" do
+    expect(Publisher).to receive(:publish).with('trips', {type: "Trip", id: subject.id, from_state: :created, to_state: :started})
     subject.start
   end
 
