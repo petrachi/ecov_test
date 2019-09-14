@@ -1,0 +1,54 @@
+body
+  $small-portion: 1em
+  $big-portion: 5em
+  $bigger-portion: 10em
+
+  background: linear-gradient(90deg, transparent, transparent $small-portion * 2, $grass $small-portion * 2, $grass $small-portion * 2 + $big-portion, $dirt $small-portion * 2 + $big-portion, $dirt $small-portion * 3 + $big-portion, $road $small-portion * 3 + $big-portion, $road $small-portion * 3 + $big-portion + $bigger-portion, $dirt $small-portion * 3 + $big-portion + $bigger-portion, $dirt $small-portion * 4 + $big-portion + $bigger-portion, $grass $small-portion * 4 + $big-portion + $bigger-portion, $grass $small-portion * 4 + $big-portion * 2 + $bigger-portion, transparent $small-portion * 4 + $big-portion * 2 + $bigger-portion)
+
+  background-position: calc(50vw - 13em - 25em)
+  background-size: 26em
+  background-repeat: no-repeat
+
+  background-color: antiquewhite
+
+
+  #content
+    position: relative
+
+    &:before
+      content: ''
+      background-image: image-url("car.png")
+      background-size: 11em
+      width: 11em
+      height: 11em
+      position: absolute
+      top: 50vh
+      left: calc(50vw - 3.75em - 24em)
+      animation: animCar 5s ease-in-out alternate infinite
+
+    &:after
+      content: ''
+      position: absolute
+      top: 0
+      left: calc(50vw - 1.25em - 24em)
+
+      width: .5em
+      height: 8vh
+      border-radius: 2px
+
+      background-color: $white
+
+      box-shadow: 0 16vh 0 $white, 0 32vh 0 $white, 0 48vh 0 $white, 0 64vh 0 $white, 0 80vh 0 $white, 0 96vh 0 $white, 0 112vh 0 $white
+      animation: animRoad .5s linear infinite
+
+@keyframes animRoad
+  from
+    transform: translateY(-16vh)
+  to
+    transform: translateY(0px)
+
+@keyframes animCar
+  from
+    transform: translateY(0vh) translateX(0)
+  to
+    transform: translateY(-30vh) translateX(-5px)
