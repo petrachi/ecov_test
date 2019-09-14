@@ -33,3 +33,11 @@ services:
     environment: &app_environment
       RACK_ENV: development
       RAILS_ENV: development
+
+  test:
+    <<: *app_base
+    command: bundle exec rspec
+    environment:
+      <<: *app_environment
+      RACK_ENV: test
+      RAILS_ENV: test
