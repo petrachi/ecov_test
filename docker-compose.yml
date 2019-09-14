@@ -37,6 +37,8 @@ services:
   test:
     <<: *app_base
     command: bundle exec rspec
+    ports:
+      - "3001:3000"
     environment:
       <<: *app_environment
       RACK_ENV: test
